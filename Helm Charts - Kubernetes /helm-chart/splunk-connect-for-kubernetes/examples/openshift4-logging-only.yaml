@@ -1,0 +1,45 @@
+---
+global:
+  splunk:
+    hec:
+      token: hec-token
+      host: splunk
+      port: 8443 
+      indexName: openshift 
+  kubernetes:
+    clusterName: my-cluster
+
+splunk-kubernetes-logging:
+  enabled: true
+  kubernetes:
+    securityContext: true
+  containers:
+    logFormatType: cri
+    logFormat: "%Y-%m-%dT%H:%M:%S.%N%:z"
+  journalLogPath: /var/log/journal
+  logs:
+    kube-audit:
+      from:
+        file:
+          path: /var/log/kube-apiserver/audit.log
+    openshift-audit:
+      from:
+        file:
+          path: /var/log/openshift-apiserver/audit.log
+      timestampExtraction:
+        format: "%Y-%m-%dT%H:%M:%SZ"
+      sourcetype: kube:openshift-apiserver-audit
+    oauth-audit:
+      from:
+        file:
+          path: /var/log/oauth-apiserver/audit.log
+      timestampExtraction:
+        format: "%Y-%m-%dT%H:%M:%SZ"
+      sourcetype: kube:oauth-apiserver-audit
+
+splunk-kubernetes-metrics:
+  enabled: false
+
+splunk-kubernetes-objects:
+  enabled: false
+

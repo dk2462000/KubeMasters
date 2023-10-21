@@ -1,0 +1,124 @@
+
+logLevel:
+
+namespace:
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  name:
+  usePullSecrets: false
+
+podSecurityPolicy:
+  create: false
+  apparmor_security: true
+
+priorityClassName:
+
+kubernetes:
+  url:
+  insecureSSL: false
+  clientCert:
+  clientKey:
+  caFile:
+  bearerTokenFile:
+  secretDir:
+  clusterName:
+
+objects:
+  core:
+    v1:
+      - name: pods
+      - name: namespaces
+      - name: nodes
+      - name: events
+        mode: watch
+
+checkpointFile:
+  name: kubernetes-objects.pos
+  volume:
+
+splunk:
+  hec:
+    host:
+    token:
+    protocol:
+    port:
+    fullUrl:
+    indexName:
+    insecureSSL:
+    clientCert:
+    clientKey:
+    caFile:
+    caPath:
+    indexRouting:
+    consume_chunk_on_4xx_errors: 
+
+secret:
+  create: true
+  name:
+
+image:
+  registry: docker.io
+  name: splunk/kube-objects
+  tag: 1.2.3
+  pullPolicy: IfNotPresent
+  usePullSecret: false
+  pullSecretName:
+
+environmentVar:
+
+podAnnotations: 
+
+extraLabels:
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+
+buffer:
+  "@type": memory
+  total_limit_size: 600m
+  chunk_limit_size: 200m
+  chunk_limit_records: 10000
+  flush_interval: 3s
+  flush_thread_count: 1
+  overflow_action: block
+  retry_max_times: 10
+  retry_type: periodic
+  retry_wait: 30
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations: []
+
+affinity: {}
+
+customFilters: {}
+indexFields: []
+
+global:
+  logLevel: info
+  splunk:
+    hec:
+      host:
+      port: 8088
+      token:
+      protocol: https
+      indexName:
+      insecureSSL: false
+      clientCert:
+      clientKey:
+      caFile:
+      fullUrl:
+      consume_chunk_on_4xx_errors:
+  kubernetes:
+    clusterName: "cluster_name"
+  prometheus_enabled: true
+  monitoring_agent_enabled: false
+  monitoring_agent_index_name: false
+  monitoring_agent_bind_address:

@@ -1,0 +1,29 @@
+global:
+  splunk:
+    hec:
+      token: my-hec-token
+      host: my-hec-host
+      port: my-hec-port
+      indexName: main
+      insecureSSL: true
+  kubernetes:
+    clusterName: "cluster_name"
+
+splunk-kubernetes-objects:
+  rbac:
+    create: false
+
+  kubernetes:
+      insecureSSL: true
+
+
+splunk-kubernetes-metrics:
+  rbac:
+    create: false
+
+  serviceAccount:
+    create: false
+
+  splunk:
+    hec:
+      indexName: my-metrics-index

@@ -1,0 +1,153 @@
+
+logLevel:
+
+namespace:
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  name:
+  usePullSecrets: false
+
+podSecurityPolicy:
+  create: false
+  apparmor_security: true
+
+splunk:
+  hec:
+    host:
+    port:
+    token:
+    protocol:
+    fullUrl:
+    indexName:
+    insecureSSL:
+    clientCert:
+    clientKey:
+    caFile:
+    consume_chunk_on_4xx_errors:
+
+secret:
+  create: true
+  name:
+
+image:
+  registry: docker.io
+  name: splunk/k8s-metrics
+  tag: 1.2.3
+  pullPolicy: IfNotPresent
+  usePullSecret: false
+  pullsecretName:
+
+imageAgg:
+  registry: docker.io
+  name: splunk/k8s-metrics-aggr
+  tag: 1.2.3
+  pullPolicy: IfNotPresent
+  usePullSecret: false
+  pullsecretName:
+
+environmentVar:
+
+environmentVarAgg:
+
+podAnnotations:
+
+podAnnotationsAgg:
+
+extraLabels:
+
+extraLabelsAgg:
+
+resources:
+  fluent:
+    limits:
+      cpu: 200m
+      memory: 300Mi
+    requests:
+      cpu: 200m
+      memory: 300Mi
+buffer:
+  "@type": memory
+  total_limit_size: 400m
+  chunk_limit_size: 100m
+  chunk_limit_records: 10000
+  flush_interval: 5s
+  flush_thread_count: 1
+  overflow_action: block
+  retry_max_times: 10
+  retry_type: periodic
+  retry_wait: 30
+
+aggregatorBuffer:
+  "@type": memory
+  total_limit_size: 400m
+  chunk_limit_size: 100m
+  chunk_limit_records: 10000
+  flush_interval: 5s
+  flush_thread_count: 1
+  overflow_action: block
+  retry_max_times: 10
+  retry_type: periodic
+  retry_wait: 30
+
+metricsInterval: 15s
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations:
+  - key: node-role.kubernetes.io/master
+    effect: NoSchedule
+
+aggregatorTolerations: {}
+
+aggregatorNodeSelector:
+  kubernetes.io/os: linux
+
+priorityClassName:
+
+priorityClassNameAgg:
+
+affinity: {}
+
+kubernetes:
+  kubeletAddress:
+  kubeletPort:
+  kubeletPortAggregator:
+  useRestClientSSL: true
+  insecureSSL: false
+  caFile:
+  bearerTokenFile:
+  secretDir:
+  clusterName:
+
+customFilters: {}
+
+customFiltersAggr: {}
+
+rollingUpdate:
+
+global:
+  logLevel: info
+  splunk:
+    hec:
+      host:
+      port: 8088
+      token:
+      protocol: https
+      indexName:
+      insecureSSL: false
+      clientCert:
+      clientKey:
+      caFile:
+      fullUrl:
+      consume_chunk_on_4xx_errors:
+  kubernetes:
+    clusterName: "cluster_name"
+  prometheus_enabled: true
+  monitoring_agent_enabled: false
+  monitoring_agent_index_name: false
+  monitoring_agent_bind_address:
